@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ES5",
+    "declaration": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@@/*": [".dumi/tmp/*"],
+      "encodeHooks": ["./packages/hooks/src/index.ts"],
+      "tommy-encode-hooks": ["./packages/hooks/src/index.ts"],
+      "encodeHooks/lib/*": ["./packages/hooks/src/*"],
+      "encode-hooks/lib/*": ["./packages/hooks/src/*"]
+    },
+    "importHelpers": true
+  },
+  "exclude": ["node_modules", "lib", "es", "dist"]
+}

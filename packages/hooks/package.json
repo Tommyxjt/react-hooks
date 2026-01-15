@@ -1,0 +1,64 @@
+{
+  "name": "@tommyxjt/react-hooks",
+  "private": false,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "React hooks library",
+  "main": "lib/index.cjs",
+  "module": "es/index.js",
+  "unpkg": "dist/index.umd.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./es/index.d.ts",
+        "default": "./es/index.js"
+      },
+      "require": {
+        "types": "./lib/index.d.ts",
+        "default": "./lib/index.cjs"
+      }
+    },
+    "./*": {
+      "import": "./es/*.js",
+      "require": "./lib/*.cjs",
+      "types": "./dist/*.d.ts"
+    }
+  },
+  "scripts": {
+    "clean": "rimraf lib es dist",
+    "build": "npm run clean && rollup -c",
+    "prepublishOnly": "npm run build",
+    "release": "npm run build && npm publish"
+  },
+  "keywords": [],
+  "author": "Tommy Xu",
+  "license": "MIT",
+  "packageManager": "pnpm@10.27.0",
+  "files": [
+    "lib",
+    "es",
+    "dist",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.6",
+    "@babel/preset-env": "^7.28.6",
+    "@babel/preset-react": "^7.28.5",
+    "@babel/preset-typescript": "^7.28.5",
+    "rollup": "^4.55.1",
+    "@rollup/plugin-babel": "^6.1.0",
+    "@rollup/plugin-commonjs": "^29.0.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.3.0",
+    "rollup-plugin-dts": "^6.3.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rimraf": "^6.1.2",
+    "typescript": "^5.9.3"
+  }
+}
