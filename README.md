@@ -1,7 +1,7 @@
-# tommy-react-hooks
+# tx-labs react-hooks
 
-[![NPM version](https://img.shields.io/npm/v/tommy-encode-hooks.svg?style=flat)](https://npmjs.org/package/tommy-encode-hooks)
-[![NPM downloads](http://img.shields.io/npm/dm/tommy-encode-hooks.svg?style=flat)](https://npmjs.org/package/tommy-encode-hooks)
+[![NPM version](https://img.shields.io/npm/v/%40tx-labs%2Freact-hooks.svg?style=flat)](https://npmjs.org/package/@tx-labs/react-hooks)
+[![NPM downloads](https://img.shields.io/npm/dm/%40tx-labs%2Freact-hooks.svg?style=flat)](https://npmjs.org/package/@tx-labs/react-hooks)
 
 A react library developed with dumi
 

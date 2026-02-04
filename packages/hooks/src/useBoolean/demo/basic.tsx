@@ -5,7 +5,7 @@
 
 import React from 'react'; // 这边导入 React 是因为 JSX 需要 React 作用域
 import { Button } from 'antd';
-import { useBoolean } from 'tx-hooks';
+import { useBoolean } from '@tx-labs/react-hooks';
 
 export default () => {
   const [state, { toggle, setTrue, setFalse }] = useBoolean(false);
@@ -13,11 +13,9 @@ export default () => {
   return (
     <div>
       <p>Effects：{`${state}`}</p>
-      <p>
+      <p style={{ display: 'flex', gap: 8 }}>
         <Button onClick={toggle}>Toggle</Button>
-        <Button onClick={setTrue} style={{ margin: '0 8px' }}>
-          setTrue
-        </Button>
+        <Button onClick={setTrue}>setTrue</Button>
         <Button onClick={setFalse}>setFalse</Button>
       </p>
     </div>

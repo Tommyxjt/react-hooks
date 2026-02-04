@@ -1,6 +1,5 @@
 # Node
 node_modules/
-pnpm-lock.yaml
 package-lock.json
 yarn.lock
 
@@ -30,7 +29,13 @@ Thumbs.db
 .dumi/tmp
 .dumi/tmp-production
 
-# rollup
+# dumi build output
+docs-dist/
+
+# hooks build output
+packages/hooks/lib/
+packages/hooks/es/
+packages/hooks/dist/
 packages/hooks/.rollup.cache/
 
 # npm

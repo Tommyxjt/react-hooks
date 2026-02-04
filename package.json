@@ -1,26 +1,23 @@
 {
-  "name": "tx-hooks",
+  "name": "tx-labs-docs",
+  "private": true,
   "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Tommyxjt/tommy-react-hooks"
+    "url": "git+https://github.com/Tommyxjt/react-hooks.git"
   },
   "description": "A react library developed with dumi",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "start": "npm run dev",
-    "dev": "dumi dev",
-    "build": "father build",
-    "build:watch": "father dev",
+    "dev": "PORT=3000 dumi dev",
+    "build": "npm run docs:build",
     "docs:build": "dumi build",
     "docs:preview": "dumi preview",
     "prepare": "husky install && dumi setup",
     "doctor": "father doctor",
     "lint": "npm run lint:es && npm run lint:css",
-    "lint:css": "stylelint \"{src,test}/**/*.{css,less}\"",
-    "lint:es": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
-    "prepublishOnly": "father doctor && npm run build",
+    "lint:css": "stylelint \"public/**/*.{css,less}\" \"packages/**/*.{css,less}\"",
+    "lint:es": "eslint \"packages/**/*.{js,jsx,ts,tsx}\"",
     "encode-fe-lint-scan": "encode-fe-lint scan",
     "encode-fe-lint-fix": "encode-fe-lint fix",
     "test": "jest"
@@ -29,9 +26,6 @@
     "tommyxu.sh@outlook.com"
   ],
   "license": "MIT",
-  "files": [
-    "dist"
-  ],
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
@@ -53,13 +47,6 @@
       "eslint --fix",
       "prettier --parser=typescript --write"
     ]
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "peerDependencies": {
-    "react": ">=16.9.0",
-    "react-dom": ">=16.9.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.4.1",

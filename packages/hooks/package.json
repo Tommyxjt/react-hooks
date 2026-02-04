@@ -1,6 +1,18 @@
 {
-  "name": "@tommyxjt/react-hooks",
+  "name": "@tx-labs/react-hooks",
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tommyxjt/react-hooks.git",
+    "directory": "packages/hooks"
+  },
+  "bugs": {
+    "url": "https://github.com/Tommyxjt/react-hooks/issues"
+  },
+  "homepage": "https://<DOCS_URL_PLACEHOLDER>",
   "version": "1.0.0",
   "type": "module",
   "description": "React hooks library",
@@ -18,20 +30,21 @@
         "types": "./lib/index.d.ts",
         "default": "./lib/index.cjs"
       }
-    },
-    "./*": {
-      "import": "./es/*.js",
-      "require": "./lib/*.cjs",
-      "types": "./dist/*.d.ts"
     }
   },
   "scripts": {
     "clean": "rimraf lib es dist",
     "build": "npm run clean && rollup -c",
     "prepublishOnly": "npm run build",
-    "release": "npm run build && npm publish"
+    "release": "npm publish --access public"
   },
-  "keywords": [],
+  "keywords": [
+    "react",
+    "hooks",
+    "typescript",
+    "state",
+    "debounce"
+  ],
   "author": "Tommy Xu",
   "license": "MIT",
   "packageManager": "pnpm@10.27.0",
@@ -60,5 +73,6 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rimraf": "^6.1.2",
     "typescript": "^5.9.3"
-  }
+  },
+  "sideEffects": false
 }

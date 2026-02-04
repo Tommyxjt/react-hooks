@@ -5,7 +5,7 @@
 
 import React from 'react'; // 这边导入 React 是因为 JSX 需要 React 作用域
 import { Button } from 'antd';
-import { useToggle } from 'tx-hooks';
+import { useToggle } from '@tx-labs/react-hooks';
 
 export default () => {
   const [state, { toggle, setLeft, setRight, set }] = useToggle();
@@ -13,11 +13,9 @@ export default () => {
   return (
     <div>
       <p>Effects：{`${state}`}</p>
-      <p>
+      <p style={{ display: 'flex', gap: 8 }}>
         <Button onClick={toggle}>Toggle</Button>
-        <Button onClick={setLeft} style={{ margin: '0 8px' }}>
-          Toggle False
-        </Button>
+        <Button onClick={setLeft}>Toggle False</Button>
         <Button onClick={setRight}>Toggle True</Button>
         <Button onClick={() => set(Math.random() < 0.5)}>Toggle Random</Button>
       </p>

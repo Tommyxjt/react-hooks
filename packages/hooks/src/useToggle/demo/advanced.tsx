@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { Button } from 'antd';
-import { useToggle } from 'tx-hooks';
+import { useToggle } from '@tx-labs/react-hooks';
 
 export default () => {
   const [state, { toggle, setLeft, setRight, set }] = useToggle('Hello', 'World');
@@ -13,15 +13,11 @@ export default () => {
   return (
     <div>
       <p>Effects：{state}</p>
-      <p>
+      <p style={{ display: 'flex', gap: 8 }}>
         <Button onClick={toggle}>Toggle</Button>
-        <Button onClick={() => set('Hello')} style={{ margin: '0 8px' }}>
-          Set Hello
-        </Button>
+        <Button onClick={() => set('Hello')}>Set Hello</Button>
         <Button onClick={() => set('World')}>Set World</Button>
-        <Button onClick={setLeft} style={{ margin: '0 8px' }}>
-          Set Left
-        </Button>
+        <Button onClick={setLeft}>Set Left</Button>
         <Button onClick={setRight}>Set Right</Button>
       </p>
     </div>

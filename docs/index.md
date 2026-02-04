@@ -19,4 +19,4 @@ features:
     description: Put ! description here
 ---
 
-tommy-encode-hooks
+@tx-labs/react-hooks

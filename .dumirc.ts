@@ -26,6 +26,6 @@ export default defineConfig({
   },
   alias: {
     '@': '/packages/hooks/src',
-    'tx-hooks': '/packages/hooks/src/index.ts',
+    '@tx-labs/react-hooks': '/packages/hooks/src/index.ts',
   },
 });

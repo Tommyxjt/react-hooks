@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { Input } from 'antd';
-import { useDebouncedState } from 'tx-hooks';
+import { useDebouncedState } from '@tx-labs/react-hooks';
 
 export default () => {
   const [value, setValue, debouncedValue] = useDebouncedState('', {
