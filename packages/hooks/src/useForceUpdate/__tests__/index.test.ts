@@ -41,10 +41,10 @@ describe('useForceUpdate', () => {
     // forceUpdate 引起的第二次 render
     expect(renders).toBe(2);
 
-    act(() => {
-      forceUpdate();
-      forceUpdate();
-    });
+    // 这边不能把多次 forceUpdate() 放在了同一个 act() 里
+    // React 18 会做 automatic batching：同一个批次里的多次 state 更新，只触发一次 rerender
+    act(() => forceUpdate());
+    act(() => forceUpdate());
 
     expect(renders).toBe(4);
   });
