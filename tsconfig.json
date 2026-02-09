@@ -2,7 +2,7 @@
   "compilerOptions": {
     "strict": true,
     "target": "es2015",
-    "lib": ["dom", "es2015"],
+    "lib": ["dom", "ESNext"],
     "module": "esnext",
     "moduleResolution": "bundler",
     "declaration": true,

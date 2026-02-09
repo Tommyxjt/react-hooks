@@ -1,5 +1,9 @@
 module.exports = {
-  extends: ['eslint-config-encode/typescript/react', 'prettier'],
+  extends: [
+    'eslint-config-encode/typescript/react',
+    './configs/eslint/encode-react-overrides',
+    'prettier',
+  ],
   overrides: [
     {
       files: ['**/rollup.config.*', '**/*.config.*'],
