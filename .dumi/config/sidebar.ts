@@ -31,7 +31,13 @@ export default {
       'useStableCallback',
       'useUpdateEffect',
     ]),
-    group('状态相关', ['useBoolean', 'useToggle', 'useSafeSetState', 'usePrevious']),
+    group('状态相关', [
+      'useBoolean',
+      'useToggle',
+      'useSafeSetState',
+      'usePrevious',
+      'useMergeState',
+    ]),
     group('useDebounce 系列', [
       'useDebouncedState',
       'useDebouncedClick',
