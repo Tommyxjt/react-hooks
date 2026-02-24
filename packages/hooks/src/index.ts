@@ -22,6 +22,7 @@ import useEventBus from './useEventBus/hooks/useEventBus';
 // DOM 相关
 import useEventListener from './useEventListener';
 import useTitle from './useTitle';
+import useDocumentVisibility from './useDocumentVisibility';
 
 // useDebounce 系列钩子
 import useDebouncedState from './useDebounce/hooks/useDebouncedState';
@@ -71,6 +72,7 @@ export {
   // DOM 相关
   useEventListener,
   useTitle,
+  useDocumentVisibility,
 
   // useDebounce 系列钩子
   useDebounceController,

@@ -57,7 +57,7 @@ export default {
       'useRafThrottledEffect',
       'useRafScheduler',
     ]),
-    group('DOM 相关', ['useEventListener', 'useTitle']),
+    group('DOM 相关', ['useEventListener', 'useTitle', 'useDocumentVisibility']),
     group('逃生舱', ['useForceUpdate']),
   ],
 };
