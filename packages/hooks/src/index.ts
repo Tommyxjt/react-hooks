@@ -15,9 +15,10 @@ import useMap from './useMap';
 import useSet from './useSet';
 import useArray from './useArray';
 
-// useEventBus 系列钩子
+// 事件与订阅相关钩子
 import createEventBus from './useEventBus/hooks/createEventBus';
 import useEventBus from './useEventBus/hooks/useEventBus';
+import useEventListener from './useEventListener';
 
 // useDebounce 系列钩子
 import useDebouncedState from './useDebounce/hooks/useDebouncedState';
@@ -60,9 +61,10 @@ export {
   useSet,
   useArray,
 
-  // useEventBus 系列钩子
+  // 事件与订阅相关钩子
   createEventBus,
   useEventBus,
+  useEventListener,
 
   // useDebounce 系列钩子
   useDebounceController,

@@ -1,5 +1,3 @@
-// tests/hooks/useCounter/renderHook.test.ts
-// import { renderHook } from '@testing-library/react-hooks';
 import useToggle from '../index';
 import { act, renderHook } from '@testing-library/react';
 

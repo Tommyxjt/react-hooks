@@ -17,5 +17,6 @@
     },
     "importHelpers": true
   },
+  "include": [".dumirc.ts", "**/*.ts", "**/*.tsx", "**/*.d.ts"],
   "exclude": ["node_modules", "lib", "es", "dist"]
 }
