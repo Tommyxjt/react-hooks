@@ -41,7 +41,7 @@ export default {
       'useSet',
       'useArray',
     ]),
-    group('事件与订阅', ['createEventBus', 'useEventBus', 'useEventListener']),
+    group('事件与订阅', ['createEventBus', 'useEventBus']),
     group('useDebounce 系列', [
       'useDebouncedState',
       'useDebouncedClick',
@@ -57,6 +57,7 @@ export default {
       'useRafThrottledEffect',
       'useRafScheduler',
     ]),
+    group('DOM 相关', ['useEventListener', 'useTitle']),
     group('逃生舱', ['useForceUpdate']),
   ],
 };
