@@ -30,6 +30,7 @@ export default {
       'useIsMounted',
       'useStableCallback',
       'useUpdateEffect',
+      'useSafeLayoutEffect',
     ]),
     group('状态相关', [
       'useBoolean',

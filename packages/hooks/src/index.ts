@@ -4,6 +4,7 @@ import useUnmount from './useUnmount';
 import useStableCallback from './useStableCallback';
 import useUpdateEffect from './useUpdateEffect';
 import useIsMounted from './useIsMounted';
+import useSafeLayoutEffect from './useSafeLayoutEffect';
 
 // 状态相关钩子
 import useToggle from './useToggle';
@@ -55,6 +56,7 @@ export {
   useStableCallback,
   useUpdateEffect,
   useIsMounted,
+  useSafeLayoutEffect,
 
   // 状态相关钩子
   useToggle,
