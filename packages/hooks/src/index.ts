@@ -19,11 +19,6 @@ import useArray from './useArray';
 import createEventBus from './useEventBus/hooks/createEventBus';
 import useEventBus from './useEventBus/hooks/useEventBus';
 
-// DOM 相关
-import useEventListener from './useEventListener';
-import useTitle from './useTitle';
-import useDocumentVisibility from './useDocumentVisibility';
-
 // useDebounce 系列钩子
 import useDebouncedState from './useDebounce/hooks/useDebouncedState';
 import useDebouncedClick from './useDebounce/hooks/useDebouncedClick';
@@ -43,6 +38,12 @@ import useRafRef from './useRaf/hooks/useRafRef';
 import useRafState from './useRaf/hooks/useRafState';
 import useRafThrottledEffect from './useRaf/hooks/useRafThrottledEffect';
 import useRafScheduler from './useRaf/core/useRafScheduler';
+
+// DOM 相关
+import useEventListener from './useEventListener';
+import useTitle from './useTitle';
+import useDocumentVisibility from './useDocumentVisibility';
+import useClickAway from './useClickAway';
 
 // React 逃生舱钩子
 import useForceUpdate from './useForceUpdate';
@@ -69,11 +70,6 @@ export {
   createEventBus,
   useEventBus,
 
-  // DOM 相关
-  useEventListener,
-  useTitle,
-  useDocumentVisibility,
-
   // useDebounce 系列钩子
   useDebounceController,
   useDebouncedState,
@@ -93,6 +89,12 @@ export {
   useRafState,
   useRafThrottledEffect,
   useRafScheduler,
+
+  // DOM 相关
+  useEventListener,
+  useTitle,
+  useDocumentVisibility,
+  useClickAway,
 
   // React 逃生舱钩子
   useForceUpdate,
