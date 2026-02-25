@@ -45,6 +45,7 @@ import useEventListener from './useEventListener';
 import useTitle from './useTitle';
 import useDocumentVisibility from './useDocumentVisibility';
 import useClickAway from './useClickAway';
+import useScroll from './useScroll';
 
 // React 逃生舱钩子
 import useForceUpdate from './useForceUpdate';
@@ -97,6 +98,7 @@ export {
   useTitle,
   useDocumentVisibility,
   useClickAway,
+  useScroll,
 
   // React 逃生舱钩子
   useForceUpdate,
