@@ -4,7 +4,8 @@ import useUnmount from './useUnmount';
 import useStableCallback from './useStableCallback';
 import useUpdateEffect from './useUpdateEffect';
 import useIsMounted from './useIsMounted';
-import useSafeLayoutEffect from './useSafeLayoutEffect';
+import useElementInstance from './useElementInstance';
+import useTargetEffect from './useTargetEffect';
 
 // 状态相关钩子
 import useToggle from './useToggle';
@@ -41,11 +42,13 @@ import useRafThrottledEffect from './useRaf/hooks/useRafThrottledEffect';
 import useRafScheduler from './useRaf/core/useRafScheduler';
 
 // DOM 相关
+import useSafeLayoutEffect from './useSafeLayoutEffect';
 import useEventListener from './useEventListener';
 import useTitle from './useTitle';
 import useDocumentVisibility from './useDocumentVisibility';
 import useClickAway from './useClickAway';
 import useScroll from './useScroll';
+import useSize from './useSize';
 
 // React 逃生舱钩子
 import useForceUpdate from './useForceUpdate';
@@ -57,7 +60,8 @@ export {
   useStableCallback,
   useUpdateEffect,
   useIsMounted,
-  useSafeLayoutEffect,
+  useElementInstance,
+  useTargetEffect,
 
   // 状态相关钩子
   useToggle,
@@ -94,11 +98,13 @@ export {
   useRafScheduler,
 
   // DOM 相关
+  useSafeLayoutEffect,
   useEventListener,
   useTitle,
   useDocumentVisibility,
   useClickAway,
   useScroll,
+  useSize,
 
   // React 逃生舱钩子
   useForceUpdate,

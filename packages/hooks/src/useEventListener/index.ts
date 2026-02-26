@@ -1,6 +1,7 @@
-import { useEffect, useLayoutEffect } from 'react';
 import type { RefObject } from 'react';
 import { useStableCallback } from '../_internal/react/useStableCallback';
+import { useSafeLayoutEffect } from '../_internal/react/useSafeLayoutEffect';
+import useTargetEffect from '../useTargetEffect';
 
 /**
  * 说明：
@@ -9,14 +10,6 @@ import { useStableCallback } from '../_internal/react/useStableCallback';
  *
  * TODO：后续单独做 useSubscription 作为更为跨平台的事件订阅 hook
  */
-
-/**
- * SSR 下没有 DOM，useLayoutEffect 会有警告：
- * - 浏览器环境：使用 useLayoutEffect
- * - SSR 环境：自动降级为 useEffect
- */
-const useSafeLayoutEffect =
-  typeof window !== 'undefined' && typeof document !== 'undefined' ? useLayoutEffect : useEffect;
 
 /**
  * 可被监听的目标对象
@@ -28,10 +21,6 @@ const useSafeLayoutEffect =
  *  - 当 target 为 null | undefined 时，会直接跳过此次绑定，等下次 render target 可用再进行绑定
  */
 export type NativeListenerTarget = EventTarget | null | undefined;
-
-interface ListenerTargetRef {
-  readonly current: NativeListenerTarget;
-}
 
 /**
  * 支持直接传目标对象，或传 ref（ref.current）
@@ -66,7 +55,7 @@ export interface UseEventListenerOptions {
 
   /**
    * 选择 useEffect / useLayoutEffect
-   * - SSR 下 layout 会自动降级为 effect
+   * - SSR 下 layout 会自动降级为 effect（通过 layoutEffectHook 注入实现）
    */
   effectMode?: ListenerEffectMode;
 }
@@ -78,8 +67,8 @@ export interface UseEventListenerOptions {
  * 1) handler 用 useStableCallback 包装，保证引用稳定 + 内部逻辑始终最新
  * 2) target 支持直接对象 / ref.current
  * 3) SSR 下 layout 自动降级
- * 4) 仅在“需要重绑”的场景触发 add/remove（直接 target）
- * 5) ref target 为了兼容条件挂载场景，会采用“每次 render 检查一次”的模式（确保不漏绑）
+ * 4) 仅在“需要重绑”的场景触发 add/remove（由 useTargetEffect 负责 target/ref.current 比较）
+ * 5) ref target 为了兼容条件挂载场景，会采用“每次 render 检查一次 + 精准重建”的模式（useRefTargetEffect 内部实现）
  */
 function useEventListener<EventPayload extends Event = Event>(
   eventName: string,
@@ -109,124 +98,54 @@ function useEventListener<EventPayload extends Event = Event>(
   const nativeEventListener = stableListenerHandler as unknown as EventListener;
 
   /**
-   * 订阅身份（Subscription Identity）
-   * - 变化时语义上是“旧订阅结束 + 新订阅创建”
+   * useTargetEffect 会自动处理：
+   * - direct target：按 deps 精确重建
+   * - ref target：比较 ref.current + deps，变化才 cleanup/re-run（避免每次 render 都重挂）
    */
-  const subscriptionIdentityDependencies = [eventName, listenerTarget] as const;
+  useTargetEffect(
+    (resolvedListenerTarget) => {
+      // 1) 订阅配置：关闭状态 => 不创建订阅
+      if (!isEnabled) {
+        return;
+      }
 
-  /**
-   * 订阅配置（Subscription Config）
-   * - 变化时语义上是“同一类订阅重新绑定”
-   */
-  const subscriptionConfigDependencies = [
-    isEnabled,
-    useCapture,
-    isPassive,
-    shouldTriggerOnce,
-  ] as const;
+      // 2) target 不可用（null / SSR / 非 EventTarget）=> 不创建订阅
+      if (!canAttachEventListener(resolvedListenerTarget)) {
+        return;
+      }
 
-  /**
-   * 如果 target 是 ref（尤其是条件渲染的 DOM ref），
-   * 单纯依赖数组可能会漏掉“ref.current 在 commit 后才变为真实节点”的场景。
-   *
-   * 所以这里采用一个实用策略：
-   * - ref target：每次 render 都检查一次（依赖省略），保证不漏绑
-   * - 直接 target：按依赖精确重绑
-   */
-  const isRefListenerTarget = isRefObject(listenerTarget);
+      // 3) 根据订阅配置生成原生监听参数
+      const nativeListenerOptions = buildNativeListenerOptions({
+        useCapture,
+        isPassive,
+        shouldTriggerOnce,
+      });
 
-  const subscriptionEffectDependencies = isRefListenerTarget
-    ? undefined
-    : [...subscriptionIdentityDependencies, ...subscriptionConfigDependencies, nativeEventListener];
-
-  /**
-   * 创建“当前这一轮”的订阅副作用：
-   * - 返回值是 cleanup（用于结束当前订阅）
-   * - effect / layout 两个分支复用同一套订阅逻辑
-   */
-  const createEventSubscriptionEffect = () => {
-    // 1) 订阅配置：关闭状态 => 不创建订阅
-    if (!isEnabled) {
-      return;
-    }
-
-    // 2) 解析订阅身份里的 target（兼容 ref.current）
-    const resolvedListenerTarget = resolveListenerTarget(listenerTarget);
-
-    // 3) target 不可用（null / SSR / 非 EventTarget）=> 不创建订阅
-    if (!canAttachEventListener(resolvedListenerTarget)) {
-      return;
-    }
-
-    // 4) 根据订阅配置生成原生监听参数
-    const nativeListenerOptions = buildNativeListenerOptions({
-      useCapture,
-      isPassive,
-      shouldTriggerOnce,
-    });
-
-    // 5) 创建当前订阅（attach）
-    attachEventListener(
-      resolvedListenerTarget,
-      eventName,
-      nativeEventListener,
-      nativeListenerOptions,
-    );
-
-    // 6) 结束当前订阅（cleanup / detach）
-    return () => {
-      detachEventListener(
+      // 4) 创建当前订阅（attach）
+      attachEventListener(
         resolvedListenerTarget,
         eventName,
         nativeEventListener,
         nativeListenerOptions,
       );
-    };
-  };
 
-  /**
-   * effect 分支（默认）
-   * - 只有当 effectMode !== 'layout' 时才执行
-   */
-  useEffect(() => {
-    if (effectMode === 'layout') {
-      return;
-    }
-
-    return createEventSubscriptionEffect();
-  }, subscriptionEffectDependencies);
-
-  /**
-   * layout 分支（SSR 下会自动降级为 useEffect）
-   * - 只有当 effectMode === 'layout' 时才执行
-   */
-  useSafeLayoutEffect(() => {
-    if (effectMode !== 'layout') {
-      return;
-    }
-
-    return createEventSubscriptionEffect();
-  }, subscriptionEffectDependencies);
-}
-
-/**
- * 解析监听目标：
- * - 传 ref，返回 ref.current
- * - 直接传对象，原样返回
- */
-function resolveListenerTarget(listenerTarget: ListenerTargetInput): NativeListenerTarget {
-  if (isRefObject(listenerTarget)) {
-    return listenerTarget.current;
-  }
-
-  return listenerTarget;
-}
-
-/**
- * 判断一个值是否为 ref 对象
- */
-function isRefObject(value: unknown): value is ListenerTargetRef {
-  return typeof value === 'object' && value !== null && 'current' in value;
+      // 5) 结束当前订阅（cleanup / detach）
+      return () => {
+        detachEventListener(
+          resolvedListenerTarget,
+          eventName,
+          nativeEventListener,
+          nativeListenerOptions,
+        );
+      };
+    },
+    listenerTarget,
+    [eventName, isEnabled, useCapture, isPassive, shouldTriggerOnce],
+    {
+      effectMode,
+      layoutEffectHook: useSafeLayoutEffect,
+    },
+  );
 }
 
 /**

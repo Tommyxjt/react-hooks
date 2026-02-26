@@ -30,7 +30,8 @@ export default {
       'useIsMounted',
       'useStableCallback',
       'useUpdateEffect',
-      'useSafeLayoutEffect',
+      'useTargetEffect',
+      'useElementInstance',
     ]),
     group('状态相关', [
       'useBoolean',
@@ -59,11 +60,13 @@ export default {
       'useRafScheduler',
     ]),
     group('DOM 相关', [
+      'useSafeLayoutEffect',
       'useEventListener',
       'useTitle',
       'useDocumentVisibility',
       'useClickAway',
       'useScroll',
+      'useSize',
     ]),
     group('逃生舱', ['useForceUpdate']),
   ],

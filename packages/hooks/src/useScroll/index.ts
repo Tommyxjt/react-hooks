@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { RefObject } from 'react';
-import useSafeLayoutEffect from '../_internal/react/useSafeLayoutEffect';
+import { useSafeLayoutEffect } from '../_internal/react/useSafeLayoutEffect';
 import useEventListener, { NativeListenerTarget } from '../useEventListener';
+import useTargetEffect from '../useTargetEffect';
 
 /**
  * 说明：
@@ -104,10 +105,6 @@ function useScroll(
    * - ref target：每次 render 都检查一次（依赖省略），避免漏掉“commit 后 ref.current 才可用”的时机
    * - 直接 target：按依赖精确同步
    */
-  const isRefScrollTarget = isRefObject(scrollTarget);
-
-  const syncEffectDependencies = isRefScrollTarget ? undefined : [scrollTarget, isEnabled];
-
   const syncScrollPosition = () => {
     if (!isEnabled) {
       return;
@@ -120,21 +117,17 @@ function useScroll(
     );
   };
 
-  useEffect(() => {
-    if (effectMode === 'layout') {
-      return;
-    }
-
-    syncScrollPosition();
-  }, syncEffectDependencies);
-
-  useSafeLayoutEffect(() => {
-    if (effectMode !== 'layout') {
-      return;
-    }
-
-    syncScrollPosition();
-  }, syncEffectDependencies);
+  useTargetEffect(
+    () => {
+      syncScrollPosition();
+    },
+    scrollTarget,
+    [isEnabled],
+    {
+      effectMode,
+      layoutEffectHook: useSafeLayoutEffect,
+    },
+  );
 
   return scrollPosition;
 }

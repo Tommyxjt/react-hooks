@@ -86,12 +86,11 @@ export default function BasicDemo() {
         {/* 明确尺寸的滚动画布：背景会完整覆盖可滚动区域 */}
         <div
           style={{
-            width: 720,
-            height: 760,
+            width: 'fit-content',
             padding: 12,
             boxSizing: 'border-box',
             background:
-              'linear-gradient(135deg, rgba(24,144,255,0.08) 0%, rgba(82,196,26,0.08) 100%)',
+              'linear-gradient(135deg, rgba(22, 126, 249, 0.2) 0%, rgba(20, 188, 199, 0.2) 100%)',
           }}
         >
           <Text strong>可滚动内容区域</Text>
