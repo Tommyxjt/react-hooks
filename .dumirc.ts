@@ -21,6 +21,7 @@ export default defineConfig({
   chainWebpack(config: webpackChain) {
     config.module
       .rule('md') // 处理 markdown 文件
+      .test(/\.md$/)
       .use('insert-toc-loader')
       .loader(path.resolve(__dirname, './loader/insert-toc-loader.cjs'))
       .end();
