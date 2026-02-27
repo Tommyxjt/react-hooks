@@ -32,7 +32,8 @@ export type RefTarget<TTarget> =
   | RefObject<NativeRefTarget<TTarget>>
   | { current: NativeRefTarget<TTarget> };
 
-type Cleanup = undefined | (() => void);
+// eslint-disable-next-line @typescript-eslint/no-invalid-void-type -- Cleanup 允许 void：等价于“无清理函数”，对齐 useEffect 习惯写法
+type Cleanup = void | (() => void);
 export type RefTargetEffectCallback<TTarget> = (target: NativeRefTarget<TTarget>) => Cleanup;
 
 /**
