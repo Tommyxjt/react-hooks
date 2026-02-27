@@ -21,6 +21,9 @@ import useArray from './useArray';
 import createEventBus from './useEventBus/hooks/createEventBus';
 import useEventBus from './useEventBus/hooks/useEventBus';
 
+// useStorage 系列钩子
+import useStorageState from './useStorageState';
+
 // useDebounce 系列钩子
 import useDebouncedState from './useDebounce/hooks/useDebouncedState';
 import useDebouncedClick from './useDebounce/hooks/useDebouncedClick';
@@ -76,6 +79,9 @@ export {
   // 事件与订阅相关钩子
   createEventBus,
   useEventBus,
+
+  // useStorage 系列钩子
+  useStorageState,
 
   // useDebounce 系列钩子
   useDebounceController,
