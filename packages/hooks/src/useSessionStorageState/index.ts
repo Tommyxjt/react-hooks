@@ -1,5 +1,3 @@
-// packages/hooks/src/useSessionStorageState/index.ts
-
 import type React from 'react';
 import useStorageState, { type UseStorageStateOptions } from '../useStorageState';
 import { getSessionStorage } from './utils/getSessionStorage';

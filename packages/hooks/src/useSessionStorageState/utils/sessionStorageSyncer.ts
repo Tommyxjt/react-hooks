@@ -1,5 +1,3 @@
-// packages/hooks/src/useSessionStorageState/utils/sessionStorageSyncer.ts
-
 import type { StorageChangeDetail, StorageSyncer } from '../../useStorageState';
 
 /**

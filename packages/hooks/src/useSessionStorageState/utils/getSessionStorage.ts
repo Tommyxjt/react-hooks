@@ -1,5 +1,3 @@
-// packages/hooks/src/useSessionStorageState/utils/getSessionStorage.ts
-
 import type { StorageLike } from '../../useStorageState';
 
 /**
