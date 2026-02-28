@@ -1,9 +1,6 @@
 import { useEffect, useRef } from 'react';
 import type { EventBus, EventMap } from '../core/eventBusCore';
-
-function isDev() {
-  return typeof process !== 'undefined' && process.env && process.env.NODE_ENV !== 'production';
-}
+import { __DEV__ } from '../../_internal/react/env';
 
 /**
  * useEventBus（本版本）
@@ -26,7 +23,7 @@ function useEventBus<E extends EventMap>(bus: EventBus<E> | null | undefined): E
   const warnedRef = useRef(false);
 
   useEffect(() => {
-    if (!isDev()) return;
+    if (!__DEV__) return;
     if (warnedRef.current) return;
 
     if (firstBusRef.current !== bus) {

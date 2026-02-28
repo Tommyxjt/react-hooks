@@ -74,11 +74,19 @@ describe('createEventBus', () => {
   // 4）生产环境下不应触发 maxListeners 告警
   it('should not warn maxListeners in production mode', () => {
     const prevNodeEnv = process.env.NODE_ENV;
-    process.env.NODE_ENV = 'production';
 
     try {
+      process.env.NODE_ENV = 'production';
+
+      let createEventBusProd: typeof createEventBus;
+
+      jest.isolateModules(() => {
+        // 注意：default export
+        createEventBusProd = require('../hooks/createEventBus').default;
+      });
+
       const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
-      const bus = createEventBus<TestEvents>({ maxListeners: 1 });
+      const bus = createEventBusProd!<TestEvents>({ maxListeners: 1 });
 
       bus.on('ping', jest.fn());
       bus.on('ping', jest.fn());

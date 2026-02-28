@@ -7,6 +7,7 @@ import useRefTargetEffect, {
   RefTargetEffectCallback,
   UseRefTargetEffectOptions,
 } from '../_internal/react/useRefTargetEffect';
+import { __DEV__ } from '../_internal/react/env';
 
 export type NativeTarget<TTarget> = NativeRefTarget<TTarget>;
 
@@ -46,7 +47,7 @@ function useTargetEffect<TTarget>(
   const initialEffectModeRef = useRef(effectMode);
   const initialLayoutEffectHookRef = useRef(layoutEffectHook);
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (!__DEV__) {
     if (initialEffectModeRef.current !== effectMode) {
       // eslint-disable-next-line no-console
       console.warn(

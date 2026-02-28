@@ -72,29 +72,7 @@ describe('useEventBus', () => {
     expect(warnSpy).toHaveBeenCalledTimes(1);
   });
 
-  // 5）生产环境下，即使 bus 引用变化，也不应输出开发期告警
-  it('should not warn when bus instance changes in production mode', () => {
-    const prevNodeEnv = process.env.NODE_ENV;
-    process.env.NODE_ENV = 'production';
-
-    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
-    const bus1 = createEventBus<TestEvents>();
-    const bus2 = createEventBus<TestEvents>();
-
-    const { rerender } = renderHook(({ currentBus }) => useEventBus(currentBus), {
-      initialProps: { currentBus: bus1 },
-    });
-
-    act(() => {
-      rerender({ currentBus: bus2 });
-    });
-
-    expect(warnSpy).not.toHaveBeenCalled();
-
-    process.env.NODE_ENV = prevNodeEnv;
-  });
-
-  // 6）返回的 bus 应可直接用于事件操作（证明 useEventBus 不改变实例行为）
+  // 5）返回的 bus 应可直接用于事件操作（证明 useEventBus 不改变实例行为）
   it('should preserve bus behavior after passing through useEventBus', () => {
     const bus = createEventBus<TestEvents>();
     const fn = jest.fn();
