@@ -50,9 +50,8 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       # 跑 Jest 测试
-      # -- --ci：把 --ci 这个参数透传给 jest（告诉 jest 用 CI 模式跑：更稳定、更严格一些）
       - name: Test (Jest)
-        run: pnpm test -- --ci
+        run: pnpm test
 
       # 确保 npm 包能打出来（packages/hooks）
       - name: Build package (@tx-labs/react-hooks)
