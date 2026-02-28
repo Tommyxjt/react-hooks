@@ -44,7 +44,12 @@ export default {
       'useArray',
     ]),
     group('事件与订阅', ['createEventBus', 'useEventBus']),
-    group('useStorage 系列', ['useLocalStorageState', 'useSessionStorageState', 'useStorageState']),
+    group('useStorage 系列', [
+      'useLocalStorageState',
+      'useSessionStorageState',
+      'useCookieState',
+      'useStorageState',
+    ]),
     group('useDebounce 系列', [
       'useDebouncedState',
       'useDebouncedClick',
