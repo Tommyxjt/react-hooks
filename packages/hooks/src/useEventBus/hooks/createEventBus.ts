@@ -3,6 +3,7 @@ import eventBusCore, {
   type EventBusCoreOptions,
   type EventMap,
 } from '../core/eventBusCore';
+import { __DEV__ } from '../../_internal/react/env';
 
 export interface CreateEventBusOptions<E extends EventMap> extends EventBusCoreOptions<E> {
   /**
@@ -15,10 +16,6 @@ export interface CreateEventBusOptions<E extends EventMap> extends EventBusCoreO
    * - <= 0 表示关闭告警
    */
   maxListeners?: number;
-}
-
-function isDev() {
-  return typeof process !== 'undefined' && process.env && process.env.NODE_ENV !== 'production';
 }
 
 function defaultFactoryOnError(
@@ -66,7 +63,7 @@ function createEventBus<E extends EventMap>(options: CreateEventBusOptions<E> = 
   const warnedEventNames = new Set<PropertyKey>();
 
   const maybeWarnMaxListeners = <K extends keyof E>(eventName: K) => {
-    if (!isDev()) return;
+    if (!__DEV__) return;
     if (maxListeners <= 0) return;
 
     const count = core.listenerCount(eventName);
