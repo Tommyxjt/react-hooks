@@ -1,0 +1,76 @@
+name: CD - npm
+
+on:
+  # 用 tag 作为发版开关，比 “push main 自动发版” 安全
+  push:
+    tags:
+      - 'v*.*.*'
+
+concurrency:
+  group: cd-npm
+
+  # 如果同时触发两次，不自动取消旧的，多次触发只会串行排队
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      # 最小权限：只读仓库内容
+      contents: read
+
+      # 供应链可追溯：让 npm 能记录 “这个包是由 GitHub Actions 这条链路发布的”
+      id-token: write # 给 npm provenance 用（--provenance）
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 关键：先装 pnpm（否则 setup-node 开 pnpm cache 会找不到 pnpm 可执行文件）
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.27.0
+          run_install: false
+
+      # 设置 Node 版本 + npm 认证 + pnpm 缓存
+      - name: Setup Node (npm registry auth + pnpm cache)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+          # 配置发布到 npm 官方源需要的认证写入位置
+          registry-url: 'https://registry.npmjs.org'
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build package
+        run: pnpm build:pkg
+
+      # 防呆校验：取当前触发的 tag 名与子包中的 version 比较，两者不一致就直接失败
+      # 以防 tag 和 version 不一致造成发布错版本 / 造成 npm 冲突
+      - name: Verify tag matches package version
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          PKG_VERSION=$(node -p "require('./packages/hooks/package.json').version")
+          echo "tag=$TAG pkg=$PKG_VERSION"
+          if [ "$TAG" != "$PKG_VERSION" ]; then
+            echo "ERROR: tag v$TAG does not match packages/hooks version $PKG_VERSION"
+            exit 1
+          fi
+
+      - name: Publish to npm
+        working-directory: packages/hooks
+
+        # 从 GitHub Secrets 里读取 npm token 注入环境变量，用于认证
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+        # 子包里已经配置 publishConfig.access=public，因此不需要 --access public
+        run: npm publish --provenance
