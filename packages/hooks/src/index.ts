@@ -24,6 +24,7 @@ import useEventBus from './useEventBus/hooks/useEventBus';
 // useStorage 系列钩子
 import useStorageState from './useStorageState';
 import useLocalStorageState from './useLocalStorageState';
+import useSessionStorageState from './useSessionStorageState';
 
 // useDebounce 系列钩子
 import useDebouncedState from './useDebounce/hooks/useDebouncedState';
@@ -84,6 +85,7 @@ export {
   // useStorage 系列钩子
   useStorageState,
   useLocalStorageState,
+  useSessionStorageState,
 
   // useDebounce 系列钩子
   useDebounceController,
