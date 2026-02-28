@@ -46,7 +46,7 @@ export default defineConfig({
     ],
     codeBlockMode: 'passive',
   },
-  outputPath: 'docs-dist',
+  outputPath: 'dist',
 
   themeConfig: {
     name: 'TX Hooks',

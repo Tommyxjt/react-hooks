@@ -11,7 +11,7 @@
     "start": "pnpm dev",
     "dev": "PORT=3000 dumi dev",
     "build:pkg": "pnpm --filter @tx-labs/react-hooks build",
-    "build:docs": "pnpm docs:build",
+    "build:docs": "dumi build",
     "build": "pnpm build:pkg && pnpm build:docs",
     "docs:preview": "dumi preview",
     "prepare": "husky install && dumi setup",
