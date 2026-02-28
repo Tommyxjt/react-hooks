@@ -44,7 +44,7 @@ const commonPlugins = [
   resolve(),
   commonjs(),
   typescript({
-    tsconfig: './tsconfig.json',
+    tsconfig: './tsconfig.build.json',
     // 关键：不生成声明文件
     // 因为 @rollup/plugin-typescript 会为每个源文件生成对应的 .d.ts
     // 无法做到将所有类型合并到一个文件
