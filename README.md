@@ -12,7 +12,7 @@ A small, practical React Hooks library built with TypeScript. Includes common st
 
 ## Installation
 
-···bash
+```bash
 
 # npm
 
@@ -25,29 +25,30 @@ pnpm add @tx-labs/react-hooks
 # yarn
 
 yarn add @tx-labs/react-hooks
-···
+```
 
 ## Quick Start
 
-···tsx
-import React from "react";
-import { useToggle, useDebouncedCallback } from "@tx-labs/react-hooks";
+```tsx
+import React from 'react';
+import { useToggle, useDebouncedCallback } from '@tx-labs/react-hooks';
 
 export default function Demo() {
-const [on, { toggle }] = useToggle(false);
-const log = useDebouncedCallback((v: boolean) => console.log("on =", v), 300);
+  const [on, { toggle }] = useToggle(false);
+  const log = useDebouncedCallback((v: boolean) => console.log('on =', v), 300);
 
-return (
-<button
-onClick={() => {
-toggle();
-log(!on);
-}} >
-{on ? "ON" : "OFF"}
-</button>
-);
+  return (
+    <button
+      onClick={() => {
+        toggle();
+        log(!on);
+      }}
+    >
+      {on ? 'ON' : 'OFF'}
+    </button>
+  );
 }
-···
+```
 
 ## Hooks
 
@@ -116,7 +117,7 @@ log(!on);
 
 ## Development
 
-···bash
+```bash
 
 # install
 
@@ -143,7 +144,7 @@ pnpm build:docs
 # build both (package + docs)
 
 pnpm build
-···
+```
 
 ## License
 
