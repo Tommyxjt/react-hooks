@@ -29,6 +29,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # 安装 pnpm，但不在这一步自动 install
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.27.0
+          run_install: false
+
       # 安装 Node，配置缓存策略：以 lockfile 作为缓存 key 的依据：lock 变了就更新缓存；lock 不变就复用
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -36,13 +43,6 @@ jobs:
           node-version: 20
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
-
-      # 安装 pnpm，但不在这一步自动 install
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.27.0
-          run_install: false
 
       # 严格按 lockfile 安装依赖
       # 保证可复现构建：不会出现「CI 自己偷偷改 lockfile 或装出不同依赖版本」
