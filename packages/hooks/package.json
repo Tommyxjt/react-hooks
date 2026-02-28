@@ -13,7 +13,7 @@
     "url": "https://github.com/Tommyxjt/react-hooks/issues"
   },
   "homepage": "https://github.com/Tommyxjt/react-hooks#readme",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "type": "module",
   "description": "React hooks library",
   "main": "lib/index.cjs",
