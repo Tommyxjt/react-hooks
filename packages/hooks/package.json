@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/Tommyxjt/react-hooks/issues"
   },
-  "homepage": "https://<DOCS_URL_PLACEHOLDER>",
+  "homepage": "https://github.com/Tommyxjt/react-hooks#readme",
   "version": "1.0.0",
   "type": "module",
   "description": "React hooks library",
@@ -34,16 +34,26 @@
   },
   "scripts": {
     "clean": "rimraf lib es dist",
-    "build": "npm run clean && rollup -c",
-    "prepublishOnly": "npm run build",
-    "release": "npm publish --access public"
+    "build": "pnpm clean && rollup -c",
+    "prepublishOnly": "pnpm build",
+    "release": "npm publish"
   },
   "keywords": [
     "react",
+    "react-dom",
+    "react-hooks",
     "hooks",
     "typescript",
-    "state",
-    "debounce"
+    "utility-hooks",
+    "state-management",
+    "lifecycle",
+    "effect",
+    "debounce",
+    "throttle",
+    "performance",
+    "isMounted",
+    "safe-setstate",
+    "event-listener"
   ],
   "author": "Tommy Xu",
   "license": "MIT",

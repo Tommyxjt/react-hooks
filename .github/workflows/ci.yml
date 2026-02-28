@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  # 任何 PR（开 PR、push 新提交、rebase 等）都触发 CI
+  # 保证 PR 在合并前就能发现问题
+  pull_request:
+
+  # 合并进 main 后再跑一次
+  # 防止「PR 上绿了，但合并时冲突 / 合并结果导致挂了」的情况，确保 main 永远是绿的
+  push:
+    branches: [main]
+
+# 把同一个 ref 的运行归为一组
+# 如果连续 push 多次，只保留最新一次，旧的自动取消
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+
+    # 最小权限原则：只允许读仓库内容（CI 不需要写仓库、发 release 等权限）
+    permissions:
+      contents: read
+
+    steps:
+      # 把 GitHub 仓库代码拉到 runner 上
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 安装 pnpm，但不在这一步自动 install
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.27.0
+          run_install: false
+
+      # 安装 Node，配置缓存策略：以 lockfile 作为缓存 key 的依据：lock 变了就更新缓存；lock 不变就复用
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      # 严格按 lockfile 安装依赖
+      # 保证可复现构建：不会出现「CI 自己偷偷改 lockfile 或装出不同依赖版本」
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+
+      # 跑 Jest 测试
+      - name: Test (Jest)
+        run: pnpm test
+
+      # 确保 npm 包能打出来（packages/hooks）
+      - name: Build package (@tx-labs/react-hooks)
+        run: pnpm build:pkg
+
+      # 确保 docs 能 build
+      # - name: Build docs (dumi)
+      #   run: pnpm build:docs
