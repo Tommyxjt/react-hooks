@@ -16,6 +16,7 @@ function rehypeMermaidLazy(options: any) {
 }
 
 export default defineConfig({
+  title: 'TX Hooks',
   styles: ['/styles/index.css'],
   // webpack 配置
   chainWebpack(config: webpackChain) {

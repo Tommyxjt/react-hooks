@@ -1,5 +1,6 @@
 ---
 toc: false
+title: TX Hooks
 hero:
   title: TX Hooks
   description: 一套面向工程实践的 React Hooks 工具库（TypeScript 友好、可组合、可树摇），覆盖闭包安全、事件订阅、帧调度、状态与常用 DOM 场景。
