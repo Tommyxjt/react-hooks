@@ -1,0 +1,14 @@
+/* 只收窄 index.md */
+.home-narrow {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+  box-sizing: border-box;
+}
+
+/* 避免代码块撑爆：超出就横向滚动 */
+.home-narrow pre {
+  overflow: auto;
+}
